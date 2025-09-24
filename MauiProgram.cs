@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using RecipeBook.ViewModels;
 
 namespace RecipeBook
 {
@@ -15,8 +16,13 @@ namespace RecipeBook
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<RecipeListViewModel>();
+
+            // Register Views
+            builder.Services.AddSingleton<RecipeListPage>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

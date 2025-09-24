@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RecipeBook.View.RecipeDetails"
+             Title="Recipe Details">
+
+    <!-- Use a ScrollView so long recipes don’t overflow the screen -->
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Recipe name -->
+            <Label Text="{Binding Title}"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Label Text="{Binding CookingTime}"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <!-- Recipe image -->
+            <Image Source="{Binding ImageUrl}"
+                   Aspect="AspectFill"
+                   HeightRequest="200"
+                   WidthRequest="200"
+                   HorizontalOptions="Center"
+                   Margin="0,10" />
+
+            <!-- Ingredients section -->
+            <Label Text="Ingredients"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,5" />
+
+            <!-- Display a list of ingredients (bound to ObservableCollection<string> or List<string>) -->
+            <CollectionView ItemsSource="{Binding Details.Ingredients}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding .}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Instructions section -->
+            <Label Text="{Binding Details.Description}"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,5" />
+
+            <!-- Multi-line instructions text -->
+            <Label Text="{Binding Details.Instructions}"
+                   FontSize="16"
+                   LineBreakMode="WordWrap" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
