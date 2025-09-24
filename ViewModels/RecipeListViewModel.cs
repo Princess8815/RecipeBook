@@ -8,11 +8,20 @@ namespace RecipeBook.ViewModels
 {
     public partial class RecipeListViewModel : ObservableObject
     {
+        /// <summary>
+        /// recipie collection
+        /// </summary>
         public ObservableCollection<Recipe> Recipes { get; set; }
 
+        /// <summary>
+        /// recipie chosen by used
+        /// </summary>
         [ObservableProperty]
         private Recipe? selectedRecipe;
 
+        /// <summary>
+        /// initialize list viewModel
+        /// </summary>
         public RecipeListViewModel()
         {
 

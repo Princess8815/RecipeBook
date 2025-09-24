@@ -14,6 +14,7 @@
                    FontAttributes="Bold"
                    HorizontalOptions="Center" />
 
+            <!-- Recipe CookingTime -->
             <Label Text="{Binding CookingTime}"
                    FontSize="24"
                    FontAttributes="Bold"
