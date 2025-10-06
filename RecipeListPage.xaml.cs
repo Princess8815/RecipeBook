@@ -11,7 +11,8 @@ public partial class RecipeListPage : ContentPage
     {
         InitializeComponent();
         // this assigns the view model new RecipeListViewModel to the view
-        _vm = new RecipeListViewModel();
+        _vm = RecipeListViewModel.Instance;
+
         BindingContext = _vm;
 
         //a delegate for view model to call the OnRecipeSelected function

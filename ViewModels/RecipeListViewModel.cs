@@ -8,10 +8,16 @@ namespace RecipeBook.ViewModels
 {
     public partial class RecipeListViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private string resultMessage = "detecting action";
+        public static RecipeListViewModel Instance { get; } = new RecipeListViewModel();
+
         /// <summary>
         /// recipie collection
         /// </summary>
         public ObservableCollection<Recipe> Recipes { get; set; }
+
+        public ObservableCollection<Recipe> Favorites { get; set; } = new();
 
         /// <summary>
         /// recipie chosen by used
@@ -22,7 +28,7 @@ namespace RecipeBook.ViewModels
         /// <summary>
         /// initialize list viewModel
         /// </summary>
-        public RecipeListViewModel()
+        private RecipeListViewModel()
         {
 
 
@@ -38,6 +44,36 @@ namespace RecipeBook.ViewModels
             // Notify whoever is listening (the Page) 
             RecipeSelected?.Invoke(recipe);
         }
+
+        [RelayCommand]
+        private void AddToFavorites(Recipe recipe)
+        {
+            if (!Favorites.Contains(recipe))
+            {
+                Favorites.Add(recipe);
+                ResultMessage = $"{recipe.Title} added to favorites!";
+            }
+            else
+            {
+                ResultMessage = $"{recipe.Title} is already in favorites.";
+            }
+        }
+
+        // Called when swiped left
+        [RelayCommand]
+        private void RemoveFromFavorites(Recipe recipe)
+        {
+            if (Favorites.Contains(recipe))
+            {
+                Favorites.Remove(recipe);
+                ResultMessage = $"{recipe.Title} removed from favorites.";
+            }
+            else
+            {
+                ResultMessage = $"{recipe.Title} was not in favorites.";
+            }
+        }
+
 
         public event Action<Recipe>? RecipeSelected;
     }

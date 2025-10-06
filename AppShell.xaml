@@ -3,13 +3,35 @@
     x:Class="RecipeBook.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:RecipeBook"
-    Shell.FlyoutBehavior="Disabled"
-    Title="RecipeBook">
+    xmlns:view="clr-namespace:RecipeBook.View"
+    xmlns:pages="clr-namespace:RecipeBook"
+    FlyoutBehavior="Disabled">
+
+    <!-- Custom header buttons -->
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,*">
+            <Button Text="Home"
+                    Command="{Binding GoHomeCommand}"
+                    Grid.Column="0"/>
+            <Button Text="Favorites"
+                    Command="{Binding GoFavoritesCommand}"
+                    Grid.Column="1"/>
+        </Grid>
+    </Shell.TitleView>
+
+    <!-- Register pages correctly -->
+    <ShellContent
+        Route="home"
+        Title="Home"
+        ContentTemplate="{DataTemplate pages:RecipeListPage}" />
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:RecipeListPage}"
-        Route="MainPage" />
+        Route="favorites"
+        Title="Favorites"
+        ContentTemplate="{DataTemplate view:FavoriteRecipes}" />
 
 </Shell>
+
+
+
+

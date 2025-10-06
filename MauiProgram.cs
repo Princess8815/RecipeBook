@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+using RecipeBook.View;
 using RecipeBook.ViewModels;
+
+
 
 namespace RecipeBook
 {
@@ -20,6 +23,8 @@ namespace RecipeBook
 
             // Register Views
             builder.Services.AddSingleton<RecipeListPage>();
+
+            builder.Services.AddSingleton<FavoriteRecipes>();
 
 #if DEBUG
             builder.Logging.AddDebug();
