@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using RecipeBook.Models;
 using RecipeBook.View;
 using RecipeBook.ViewModels;
 
@@ -25,6 +26,8 @@ namespace RecipeBook
             builder.Services.AddSingleton<RecipeListPage>();
 
             builder.Services.AddSingleton<FavoriteRecipes>();
+
+            builder.Services.AddSingleton<PersonalProfile>();
 
 #if DEBUG
             builder.Logging.AddDebug();

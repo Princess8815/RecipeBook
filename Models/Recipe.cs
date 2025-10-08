@@ -1,20 +1,29 @@
-﻿using System;
+﻿using RecipeBook.Models.Recipes;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipeBook.Models
 {
     public class Recipe
     {
         public string? Title { get; set; }
-        //public string? Description { get; set; }
         public string? ImageUrl { get; set; }
-        public List<string>? Ingredients { get; set; }
-        //public string? Instructions { get; set; }
         public string? CookingTime { get; set; }
-
         public RecipeDetails? Details { get; set; }
+
+        /// <summary>
+        /// Returns all available recipes created by their respective classes.
+        /// </summary>
+        public static List<Recipe> GetAllRecipes()
+        {
+            return new List<Recipe>
+            {
+                ChickenStirFry.Create(),
+                SpaghettiBolognese.Create(),
+                // Add future recipes here, like:
+                // PancakeStack.Create(),
+                // VeggieCurry.Create(),
+            };
+        }
     }
 }
+

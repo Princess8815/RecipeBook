@@ -1,14 +1,15 @@
 using RecipeBook.ViewModels;
 
-namespace RecipeBook.View;
-
-public partial class FavoriteRecipes : ContentPage
+namespace RecipeBook.View
 {
-    public FavoriteRecipes()
+    public partial class FavoriteRecipes : ContentPage
     {
-        InitializeComponent();
-
-        // Force it to use the exact same instance that the recipe list uses
-        BindingContext = RecipeListViewModel.Instance;
+        public FavoriteRecipes()
+        {
+            InitializeComponent();
+            BindingContext = new FavoriteRecipesViewModel();
+        }
     }
 }
+
+

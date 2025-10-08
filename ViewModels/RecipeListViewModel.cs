@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RecipeBook.Models;
-using RecipeBook.Models.Recipes;
 using System.Collections.ObjectModel;
 
 namespace RecipeBook.ViewModels
@@ -9,39 +8,25 @@ namespace RecipeBook.ViewModels
     public partial class RecipeListViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string resultMessage = "detecting action";
-        public static RecipeListViewModel Instance { get; } = new RecipeListViewModel();
+        private string? resultMessage = "detecting action";
 
-        /// <summary>
-        /// recipie collection
-        /// </summary>
+        public static RecipeListViewModel Instance { get; } = new();
+
         public ObservableCollection<Recipe> Recipes { get; set; }
-
         public ObservableCollection<Recipe> Favorites { get; set; } = new();
 
-        /// <summary>
-        /// recipie chosen by used
-        /// </summary>
         [ObservableProperty]
         private Recipe? selectedRecipe;
 
-        /// <summary>
-        /// initialize list viewModel
-        /// </summary>
         private RecipeListViewModel()
         {
-
-
-            Recipes = new ObservableCollection<Recipe>
-            {
-                ChickenStirFry.Create(),
-                SpaghettiBolognese.Create()
-            };
+            // 🧠 Pull from Recipe model
+            Recipes = new ObservableCollection<Recipe>(Recipe.GetAllRecipes());
         }
+
         [RelayCommand]
         private void RecipeMenu(Recipe recipe)
         {
-            // Notify whoever is listening (the Page) 
             RecipeSelected?.Invoke(recipe);
         }
 
@@ -59,7 +44,6 @@ namespace RecipeBook.ViewModels
             }
         }
 
-        // Called when swiped left
         [RelayCommand]
         private void RemoveFromFavorites(Recipe recipe)
         {
@@ -74,7 +58,7 @@ namespace RecipeBook.ViewModels
             }
         }
 
-
         public event Action<Recipe>? RecipeSelected;
     }
 }
+

@@ -1,34 +1,73 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:RecipeBook.ViewModels"
-             x:Class="RecipeBook.View.FavoriteRecipes">
+             xmlns:models="clr-namespace:RecipeBook.Models"
+             x:Class="RecipeBook.View.FavoriteRecipes"
+             x:DataType="viewmodels:FavoriteRecipesViewModel">
 
-    <CollectionView ItemsSource="{Binding Favorites}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Grid Padding="10" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+    <VerticalStackLayout>
 
-                    <Image Grid.Column="0"
-                           Source="{Binding ImageUrl}"
-                           WidthRequest="100"
-                           HeightRequest="100" />
+        <CollectionView ItemsSource="{Binding Favorites}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Recipe">
+                    <Grid Padding="10" ColumnDefinitions="Auto,*" ColumnSpacing="10">
 
-                    <VerticalStackLayout Grid.Column="1"
-                                         VerticalOptions="Center">
-                        <Label Text="{Binding Title}"
-                               FontAttributes="Bold"
-                               FontSize="16"/>
-                        <Label Text="{Binding Description}"
-                               FontAttributes="Italic"
-                               FontSize="14"
-                               TextColor="Gray"/>
-                    </VerticalStackLayout>
+                        <Grid.GestureRecognizers>
+                            <!-- Double tap opens details (via RecipeMenuCommand) -->
+                            <TapGestureRecognizer
+                                NumberOfTapsRequired="2"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                                  Path=BindingContext.RecipeMenuCommand}"
+                                CommandParameter="{Binding .}" />
 
-                </Grid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                            <!-- Swipe right to add -->
+                            <SwipeGestureRecognizer
+                                Direction="Right"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                                  Path=BindingContext.AddToFavoritesCommand}"
+                                CommandParameter="{Binding .}" />
+
+                            <!-- Swipe left to remove -->
+                            <SwipeGestureRecognizer
+                                Direction="Left"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                                  Path=BindingContext.RemoveFromFavoritesCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+
+                        <!-- Image -->
+                        <Image Grid.Column="0"
+                               Source="{Binding ImageUrl}"
+                               WidthRequest="100"
+                               HeightRequest="100" />
+
+                        <!-- Text -->
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="{Binding Title}"
+                                   FontAttributes="Bold"
+                                   FontSize="16"/>
+                            <Label Text="{Binding Details.Description}"
+                                   FontAttributes="Italic"
+                                   FontSize="14"
+                                   TextColor="Gray"/>
+                        </VerticalStackLayout>
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Feedback label -->
+        <Label Text="{Binding ResultMessage}"
+               FontSize="16"
+               Padding="10"
+               HorizontalOptions="Center"
+               VerticalOptions="End" />
+
+    </VerticalStackLayout>
 </ContentPage>
+
+
 
 
 
